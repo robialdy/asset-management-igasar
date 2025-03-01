@@ -50,6 +50,13 @@
                 </a>
             </li>
 
+            <li class="sidebar-item ">
+                <a href="" class='sidebar-link'>
+                    <i class="bi bi-card-list"></i>
+                    <span>Ownership</span>
+                </a>
+            </li>
+
             <li class="sidebar-item {{ request()->is('admin/user*') ? 'active' : '' }}">
                 <a href="{{ route('user') }}" class='sidebar-link'>
                     <i class="bi bi-person-fill"></i>
@@ -134,7 +141,7 @@
                                 <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
                                     <div class="user-menu d-flex">
                                         <div class="user-name text-end me-3">
-                                            <h6 class="mb-0 text-gray-600">Epul</h6>
+                                            <h6 class="mb-0 text-gray-600">Jawir</h6>
                                             <p class="mb-0 text-sm text-gray-600">as anjing</p>
                                         </div>
                                         <div class="user-img d-flex align-items-center">

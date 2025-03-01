@@ -7,14 +7,14 @@
     <div class="page-title">
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3>Tambah Assets</h3>
+                <h3>Edit Assets</h3>
             </div>
             <div class="col-12 col-md-6 order-md-2 order-first">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard.admin') }}">Dashboard</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('asset') }}">Asset</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Tambah Assets</li>
+                        <li class="breadcrumb-item active" aria-current="page">Edit Assets</li>
                     </ol>
                 </nav>
             </div>
@@ -28,20 +28,21 @@
             </div>
 
             <div class="card-body">
-                <form action="{{ route('asset.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('asset.update', $asset->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <div class="row">
-                    <input type="hidden" name="one_unit_many_unit" value="{{ request('one_unit_many_unit') }}">
+                    <input type="hidden" name="one_unit_many_unit" value="{{ $asset->unit }}">
 
-                        @if (request('one_unit_many_unit') == 'one-unit')
+                        @if ($asset->unit == 'one-unit')
                         <div class="form-group col-6">
-                            <label for="stock">Stock<span class="text-danger">*</span> <small class="text-muted fst-italic">Otomatis Terisi!</small></label>
-                            <input type="number" class="form-control " id="stock" placeholder="Masukan nama depan" name="stock" value="1" readonly>
+                            <label for="stock">Stock<span class="text-danger">*</span> <small class="text-muted fst-italic">Asset Satuan!</small></label>
+                            <input type="number" class="form-control " id="stock" placeholder="Masukan nama depan" name="stock" value="1" disabled>
                         </div>
                         @else
                         <div class="form-group col-6">
                             <label for="stock">Stock<span class="text-danger">*</span></label>
-                            <input type="number" class="form-control" id="stock" placeholder="Masukan jumlah stock" name="stock" value="{{ old('stock') }}">
+                            <input type="number" class="form-control" id="stock" placeholder="Masukan jumlah stock" name="stock" value="{{ old('stock', $asset->stock) }}">
                             @error('stock')
                             <small class="text-danger">{{ $message }}</small>
                             @enderror
@@ -50,7 +51,7 @@
 
                         <div class="form-group col-6">
                             <label for="name">Nama Asset<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="name" placeholder="Masukan nama asset" name="name" value="{{ old('name') }}">
+                            <input type="text" class="form-control" id="name" placeholder="Masukan nama asset" name="name" value="{{ old('name', $asset->name) }}">
                             @error('name')
                             <small class="text-danger">{{ $message }}</small>
                             @enderror
@@ -60,8 +61,8 @@
                             <label for="type">Type<span class="text-danger">*</span></label>
                             <select class="form-select" id="type" name="type">
                                 <option selected disabled>Pilih type</option>
-                                <option value="Asset Bergerak" @if(old('type') == 'Asset Bergerak') selected @endif>Asset Bergerak</option>
-                                <option value="Asset Baku" @if(old('type') == 'Asset Baku') selected @endif>Asset Baku</option>
+                                <option value="Asset Bergerak" @if(old('type', $asset->type) == 'Asset Bergerak') selected @endif>Asset Bergerak</option>
+                                <option value="Asset Baku" @if(old('type', $asset->type) == 'Asset Baku') selected @endif>Asset Baku</option>
                             </select>
                             @error('type')
                             <small class="text-danger">{{ $message }}</small>
@@ -73,7 +74,7 @@
                             <select class="form-select" id="category" name="category">
                                 <option selected disabled>Pilih categori</option>
                                 @foreach ($categorys as $category)
-                                <option value="{{ $category->id }}" @if(old('category') == $category->id) selected @endif>{{ $category->name }}</option>
+                                <option value="{{ $category->id }}" @if(old('category', $asset->id_category) == $category->id) selected @endif>{{ $category->name }}</option>
                                 @endforeach
                             </select>
                             @error('category')
@@ -83,38 +84,44 @@
 
                         <div class="form-group col-6">
                             <label for="added_date">Diberikan Tanggal<span class="text-danger">*</span></label>
-                            <input type="date" class="form-control" id="added_date" placeholder="Masukan nama asset" name="added_date" value="{{ old('added_date', date('Y-m-d')) }}">
+                            <input type="date" class="form-control" id="added_date" placeholder="Masukan nama asset" name="added_date" value="{{ old('added_date', $asset->added_date) }}">
                             @error('added_date')
                             <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
 
-                        <div class="form-group">
-                            <label for="description">Deskripsi<span class="text-danger">*</span></label>
-                            <textarea class="form-control" name="description" id="description" width="2" placeholder="Masukan deskripsi">{{old('description')}}</textarea>
-                            @error('description')
-                            <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-
                         <div class="form-group col-6">
-                            <label for="picture">Gambar Aset<span class="text-danger">*</span></label>
+                            <label for="picture">Gambar Asset</label>
                             <input type="file" class="form-control" id="picture" name="picture">
                             @error('picture')
                             <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
 
-                        <div class="form-group col-6">
-                            <label for="pic_payment">Gambar Bukti Pembelian @if (request('one_unit_many_unit') == 'one-unit')<span class="text-danger">*</span> @endif</label>
-                            <input type="file" class="form-control" id="pic_paymente" name="pic_payment">
-                            @error('pic_payment')
+                        <div class="form-group">
+                            <label for="description">Deskripsi<span class="text-danger">*</span></label>
+                            <textarea class="form-control" name="description" id="description" width="2" placeholder="Masukan deskripsi">{{old('description', $asset->description)}}</textarea>
+                            @error('description')
                             <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
 
-                        @if (request('one_unit_many_unit') == 'one-unit')
+                        @if ($asset->unit == 'one-unit')
                         <h4 class="card-title mt-3">Detail <button type="button" class="btn btn-link p-0 mb-2 btn-lg" id="add-button"><i class="bi bi-plus-circle"></i></button></h4>
+
+                        @foreach ($detailAssets as $detailAsset)
+                        <div class="row mb-3">
+                            <input type="hidden" name="detailNow[{{ $loop->index }}][id]" value="{{ $detailAsset->id }}">
+                            <div class="col-lg-6">
+                                <label for="">Title</label>
+                                <input class="form-control" type="text" placeholder="Enter Title" value="{{ $detailAsset->title }}" name="detailNow[{{ $loop->index }}][detailNow-title]">
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="">Description</label>
+                                <input class="form-control" type="text" placeholder="Enter Description" value="{{ $detailAsset->description }}" name="detailNow[{{ $loop->index }}][detailNow-description]">
+                            </div>
+                        </div>
+                        @endforeach
 
                         <div id="input-container">
 

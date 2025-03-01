@@ -75,10 +75,22 @@ Route::middleware(['auth', 'role:Staff'])->group(
             // ASSET
             Route::prefix('asset')->group(function () {
                 Route::get('', [AssetController::class, 'index'])->name('asset');
+                // DETAILS
+                Route::get('detail/{code}', [AssetController::class, 'detail'])->name('asset.detail');
                 // CREATE
                 Route::get('create', [AssetController::class, 'create'])->name('asset.create');
                 Route::post('store', [AssetController::class, 'store'])->name('asset.store');
+                // EDIT
+                Route::get('edit/{code}', [AssetController::class, 'edit'])->name('asset.edit');
+                Route::put('update/{id}', [AssetController::class, 'update'])->name('asset.update');
+                // DELETE
+                Route::delete('delete/{id}', [AssetController::class, 'delete'])->name('asset.delete');
             });
+
+            Route::prefix('ownership')->group(function() {
+                
+            });
+
         });
 
 
