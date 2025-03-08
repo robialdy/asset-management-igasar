@@ -43,6 +43,13 @@
                 </a>
             </li>
 
+            <li class="sidebar-item {{ request()->is('admin/ownership*') ? 'active' : '' }}">
+                <a href="{{ route('ownership') }}" class='sidebar-link'>
+                    <i class="bi bi-card-list"></i>
+                    <span>Ownership</span>
+                </a>
+            </li>
+
             <li class="sidebar-item {{ request()->is('admin/asset*') ? 'active' : '' }}">
                 <a href="{{ route('asset') }}" class='sidebar-link'>
                     <i class="bi bi-box-seam-fill"></i>
@@ -50,12 +57,6 @@
                 </a>
             </li>
 
-            <li class="sidebar-item ">
-                <a href="" class='sidebar-link'>
-                    <i class="bi bi-card-list"></i>
-                    <span>Ownership</span>
-                </a>
-            </li>
 
             <li class="sidebar-item {{ request()->is('admin/user*') ? 'active' : '' }}">
                 <a href="{{ route('user') }}" class='sidebar-link'>
@@ -198,6 +199,7 @@
         document.addEventListener("turbo:load", function() {
             // inisiaisi kembali
             $('#table1').DataTable();
+            $('#table3').DataTable();
         });
         </script>
     </script> --}}

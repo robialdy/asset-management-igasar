@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('division_ownership', function (Blueprint $table) {
             $table->id();
-            $table->string('code_ownership')->unique();
             $table->foreignId('id_division')->constrained('division')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('id_asset')->constrained('assets')->onDelete('cascade')->onUpdate('cascade');
             $table->string('attachment');
             $table->string('return_attachment');
+            $table->date('added_date');
             $table->dateTime('return_at');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

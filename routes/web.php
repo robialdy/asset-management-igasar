@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\AssetController;
+use App\Http\Controllers\admin\OwnershipController;
 use Illuminate\Support\Facades\Auth;
 // admin
 use Illuminate\Support\Facades\Route;
@@ -88,7 +89,23 @@ Route::middleware(['auth', 'role:Staff'])->group(
             });
 
             Route::prefix('ownership')->group(function() {
-                
+                Route::get('', [OwnershipController::class, 'index'])->name('ownership');
+                // CREATE
+                Route::get('create', [OwnershipController::class, 'create'])->name('ownership.create');
+                Route::post('store', [OwnershipController::class, 'store'])->name('ownership.store');
+                // EDIT
+                Route::get('edit/{code}', [OwnershipController::class, 'edit'])->name('ownership.edit');
+                Route::put('update/{id}', [OwnershipController::class, 'update'])->name('ownership.update');
+                // DELETE
+                Route::delete('delete/{id}', [OwnershipController::class, 'delete'])->name('ownership.delete');
+                // detail
+                Route::get('detail/{code}', [OwnershipController::class, 'detail'])->name('ownership.detail');
+                // LAMPIRAN
+                Route::get('attachment', [OwnershipController::class, 'attachment'])->name('ownership.attachment');
+                Route::get('return-attachment', [OwnershipController::class, 'return_attachment'])->name('ownership.return-attachment');
+                // RETURN
+                Route::get('return/{code}', [OwnershipController::class, 'return'])->name('ownership.return');
+                Route::post('return/{id}', [OwnershipController::class, 'return_update'])->name('ownership.return_update');
             });
 
         });

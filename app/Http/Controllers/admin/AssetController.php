@@ -15,8 +15,8 @@ class AssetController extends Controller
     {
         $data = [
             'title' => 'Asset | SMK IGAPIN',
-            'assets_one_unit' => Asset::orderBy('created_at', 'desc')->where('unit', 'one-unit')->get(),
-            'assets_many_unit' => Asset::orderBy('created_at', 'desc')->where('unit', 'many-unit')->get(),
+            'assets_one_unit' => Asset::orderBy('created_at', 'desc')->where('unit', 'one-unit')->where('status', 'Available')->get(),
+            'assets_many_unit' => Asset::orderBy('created_at', 'desc')->where('unit', 'many-unit')->where('status', 'Available')->get(),
         ];
         return view('admin.assets.index', $data);
     }
@@ -156,11 +156,12 @@ class AssetController extends Controller
             unlink(public_path('assets/static/images/assets/' . $asset->picture));
         }
 
-        $asset = Asset::find($id)->update([
+        $asset = Asset::where('id', $id)->first();
+        Asset::where('id', $id)->update([
             'stock' => $stock,
             'name' => $request->name,
             'type' => $request->type,
-            'category' => $request->category,
+            'id_category' => $request->category,
             'added_date' => $request->added_date,
             'description' => $request->description,
             'picture' => $picture_name,
@@ -182,7 +183,7 @@ class AssetController extends Controller
 
             if ($request->details) {
                 foreach ($request->details as $detail) {
-                    Detail_Asset::create([
+                    $detail = Detail_Asset::create([
                         'id_asset' => $asset->id,
                         'title' => $detail['title'],
                         'description' => $detail['description'],

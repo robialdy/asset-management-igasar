@@ -66,6 +66,7 @@
                                 <th>Tgl Ditambahkan</th>
                                 <th>Stok</th>
                                 <th>Status</th>
+                                <th>Notes</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -84,6 +85,7 @@
                                 <td>{{ $asset->added_date }}</td>
                                 <td>{{ $asset->stock }}</td>
                                 <td>{{ $asset->status }}</td>
+                                <td>{{ $asset->notes }}</td>
                                 <td style="vertical-align: middle; white-space: nowrap;">
                                     <a href="{{ route('asset.detail', $asset->code_asset) }}" class="text-primary" style="display: inline-block; vertical-align: middle;">
                                         <i class="bi bi-info-square-fill fs-4"></i>
@@ -110,7 +112,7 @@
 
             <div class="tab-pane fade show" id="many-unit" role="tabpanel" aria-labelledby="many-tab">
                 <div class="table-responsive">
-                    <table class="table" id="table1">
+                    <table class="table" id="table3">
                         <thead>
                             <tr>
                                 <th>No</th>

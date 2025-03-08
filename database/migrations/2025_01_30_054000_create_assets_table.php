@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('stock');
             $table->datetime('added_date');
             $table->string('status');
+            $table->text('notes')->nullable();
             $table->string('unit');
             $table->string('pic_payment')->nullable();
             $table->timestamps();
