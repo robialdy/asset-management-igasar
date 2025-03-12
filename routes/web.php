@@ -1,19 +1,24 @@
 <?php
 
+use App\Http\Controllers\division\DivisionAssetController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+// admin
 use App\Http\Controllers\admin\AssetController;
 use App\Http\Controllers\admin\OwnershipController;
-use Illuminate\Support\Facades\Auth;
-// admin
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\DivisionController;
+use App\Http\Controllers\admin\IssueController as AdminIssueController;
 // divisi
 use App\Http\Controllers\user\DashboardController as DashboardUser;
+use App\Http\Controllers\division\IssueController as DivisionIssueController;
 // user
+use App\Http\Controllers\user\YourAssetController;
 use App\Http\Controllers\admin\DashboardController as DashboardAdmin;
 use App\Http\Controllers\division\DashboardController as DashboardDivision;
+use App\Http\Controllers\user\IssueController;
 
 // AUTH
 Route::prefix('auth')->group(function(){
@@ -23,9 +28,23 @@ Route::prefix('auth')->group(function(){
 });
 
 // STAFF / GURU
-Route::middleware(['auth', 'role:Staff'])->group(
-    function () {
-        Route::get('/', [DashboardUser::class, 'index'])->name('dashboard.user');
+Route::middleware(['auth', 'role:Staff'])->group(function () {
+    Route::get('/', [DashboardUser::class, 'index'])->name('dashboard.user');
+    // ISSUe
+    Route::prefix('issue')->group(function () {
+        Route::get('', [IssueController::class, 'index'])->name('issue');
+        // CREATE
+        Route::get('create', [IssueController::class, 'create'])->name('issue.create');
+        Route::post('store', [IssueController::class, 'store'])->name('issue.store');
+        // EDIT
+        Route::get('edit/{code_asset}', [IssueController::class, 'edit'])->name('issue.edit');
+        Route::put('update/{id}', [IssueController::class, 'update'])->name('issue.update');
+    });
+    // YOUR ASSET
+    Route::prefix('your-assets')->group(function (){
+        Route::get('', [YourAssetController::class, 'index'])->name('your-asset');
+    });
+
 });
 
 
@@ -108,6 +127,16 @@ Route::middleware(['auth', 'role:Staff'])->group(
                 Route::post('return/{id}', [OwnershipController::class, 'return_update'])->name('ownership.return_update');
             });
 
+            // ISSUE
+            Route::prefix('issue')->group(function() {
+                Route::get('', [AdminIssueController::class, 'index'])->name('admin.issue');
+                // UPDATE STATuS
+                Route::put('update/{id}', [AdminIssueController::class, 'updateStatus'])->name('admin.issue.updateStatus');
+                // PERBAIKAN
+                Route::get('repair/{code}', [AdminIssueController::class, 'repair'])->name('admin.issue.repair');
+                Route::put('repair/update/{id}', [AdminIssueController::class, 'repairUpdate'])->name('admin.issue.repairUpdate');
+            });
+
         });
 
 
@@ -116,6 +145,23 @@ Route::prefix('{division}')->middleware(['auth', 'checkDivision'])->group(functi
     Route::get('',
         [DashboardDivision::class, 'index']
     )->name('dashboard.division');
+
+    // ISSUE
+    Route::prefix('issue')->group(function() {
+        Route::get('', [DivisionIssueController::class, 'index'])->name('division.issue');
+        // CREATE
+        Route::get('create', [DivisionIssueController::class, 'create'])->name('division.issue.create');
+        Route::post('store', [DivisionIssueController::class, 'store'])->name('division.issue.store');
+        // EDIT
+        Route::get('edit/{code_asset}', [DivisionIssueController::class, 'edit'])->name('division.issue.edit');
+        Route::put('update/{id}', [DivisionIssueController::class, 'update'])->name('division.issue.update');
+    });
+
+    // YOUR ASSET
+    Route::prefix('division-assets')->group(function () {
+        Route::get('', [DivisionAssetController::class, 'index'])->name('division-asset');
+    });
+
 });
 
 

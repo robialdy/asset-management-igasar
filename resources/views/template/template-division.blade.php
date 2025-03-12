@@ -25,7 +25,7 @@
     <div class="sidebar-header position-relative">
         <div class="d-flex justify-content-between align-items-center">
             <div class="logo">
-                <a href="index.html"><h6>RPL</h6></a>
+                <a href="index.html"><h6>{{ Auth::user()->division->name }}</h6></a>
             </div>
             <div class="sidebar-toggler  x">
                 <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
@@ -42,6 +42,22 @@
                     <span>Dashboard</span>
                 </a>
             </li>
+
+            <li class="sidebar-item {{ request()->is('division-assets*') ? 'active' : '' }}">
+                <a href="{{ route('division-asset', Auth::user()->division->name) }}" class='sidebar-link'>
+                    <i class="bi bi-box-seam-fill"></i>
+                    <span>Division Asset</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item {{ request()->is(Auth::user()->division->name.'/issue*') ? 'active' : '' }}">
+                <a href="{{ route('division.issue', ['division' => Auth::user()->division->name]) }}" class='sidebar-link'>
+                    <i class="bi bi-exclamation-circle-fill"></i>
+                    <span>Issue</span>
+                </a>
+            </li>
+
+
 
         </ul>
     </div>
@@ -103,8 +119,8 @@
                                 <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
                                     <div class="user-menu d-flex">
                                         <div class="user-name text-end me-3">
-                                            <h6 class="mb-0 text-gray-600">Epul</h6>
-                                            <p class="mb-0 text-sm text-gray-600">as anjing</p>
+                                            <h6 class="mb-0 text-gray-600">{{ Auth::user()->first_name }}</h6>
+                                            <p class="mb-0 text-sm text-gray-600">{{ Auth::user()->role }}</p>
                                         </div>
                                         <div class="user-img d-flex align-items-center">
                                             <div class="avatar avatar-md">

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('return_attachment')->nullable();
             $table->date('added_date');
             $table->dateTime('return_at')->nullable();
+            $table->string('status');
             $table->timestamps();
             $table->softDeletes();
         });

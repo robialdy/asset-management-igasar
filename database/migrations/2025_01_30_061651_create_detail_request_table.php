@@ -14,12 +14,13 @@ return new class extends Migration
         Schema::create('detail_request', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_user')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('id_admin')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('id_admin')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('division_name')->nullable();
             $table->enum('type', ['Perbaikan', 'Pengembalian']);
             $table->foreignId('id_asset')->constrained('assets')->onDelete('cascade')->onUpdate('cascade');
             $table->string('status');
             $table->text('description');
+            $table->text('solution_pic')->nullable();
             $table->timestamps();
         });
     }

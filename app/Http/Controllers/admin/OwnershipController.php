@@ -7,6 +7,7 @@ use App\Models\Asset;
 use App\Models\Detail_Asset;
 use App\Models\Division;
 use App\Models\Division_Ownership;
+use App\Models\Request as ModelRequest;
 use App\Models\User;
 use App\Models\User_Ownership;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class OwnershipController extends Controller
         $data = [
             'title' => 'Ownership | SMK IGAPIN',
             'asset_users' => User_Ownership::orderBy('created_at', 'desc')->where('return_at', '=', null)->get(),
-            'asset_divisions' => Division_Ownership::orderBy('created_at', 'desc')->where('return_at', '=', null)->get(),
+            'asset_divisions' => Division_Ownership::orderBy('created_at', 'desc')->whereNot('status', 'Deleted')->get(),
         ];
         return view('admin.ownership.index', $data);
     }
@@ -62,7 +63,8 @@ class OwnershipController extends Controller
                 'id_user' => $request->ownership,
                 'id_asset' => $request->id_asset,
                 'added_date' => $request->added_date,
-                'attachment' => $attachment
+                'attachment' => $attachment,
+                'status' => 'Owned'
             ]);
 
             Asset::find($request->id_asset)->update([
@@ -73,6 +75,7 @@ class OwnershipController extends Controller
                 'id_division' => $request->ownership,
                 'id_asset' => $request->id_asset,
                 'added_date' => $request->added_date,
+                'status' => 'Owned'
             ]);
 
             Asset::find($request->id_asset)->update([
@@ -152,6 +155,8 @@ class OwnershipController extends Controller
                 'attachment' => $attachment
             ]);
         } elseif ($request->route == 'division') {
+
+
             Division_Ownership::find($id)->update([
                 'id_division' => $request->ownership,
                 'id_asset' => $request->id_asset,
@@ -218,10 +223,10 @@ class OwnershipController extends Controller
         $asset = Asset::where('code_asset', $code_asset)->firstOrFail();
 
         if (User_Ownership::where('id_asset', $asset->id)->first()) {
-            $ownership = User_Ownership::where('id_asset', $asset->id)->first();
+            $ownership = User_Ownership::where('id_asset', $asset->id)->where('status', 'Issue')->first();
             $route = 'User';
         } else {
-            $ownership = Division_Ownership::where('id_asset', $asset->id)->first();
+            $ownership = Division_Ownership::where('id_asset', $asset->id)->where('status', 'Issue')->first();
             $route = 'Division';
         }
 
@@ -236,6 +241,13 @@ class OwnershipController extends Controller
     // cuma berlaku di user aja (divisi gada upload upload an)
     public function return_update(Request $request, $id)
     {
+        // $ownership = Division_Ownership::where('id', $id)->firstOrFail();
+        // ModelRequest::where('id_asset', $ownership->id_asset)->where('id_user', $ownership->id_user)->where('status', 'Proses')->where('type', 'Pengembalian')->update([
+        //     'status' => 'Selesai'
+        // ]);
+
+        // $koko = ModelRequest::where('id_asset', $ownership->id_asset)->where('status', 'Proses')->where('type', 'Pengembalian')->first();
+        // dd($koko);
 
         if ($request->route == 'User') {
             $request->validate([
@@ -253,6 +265,12 @@ class OwnershipController extends Controller
             User_Ownership::where('id', $id)->update([
                 'return_attachment' => $name_file,
                 'return_at' => date('Y-m-d H:i:s'),
+                'status' => 'Deleted'
+            ]);
+
+            // UPDATE REQUEST
+            ModelRequest::where('id_asset', $ownership->id_asset)->where('status', 'Proses')->where('type', 'Pengembalian')->update([
+                'status' => 'Selesai'
             ]);
         } else {
             $ownership = Division_Ownership::where('id', $id)->firstOrFail();
@@ -267,6 +285,12 @@ class OwnershipController extends Controller
             Division_Ownership::where('id', $id)->update([
                 'return_attachment' => $name_file,
                 'return_at' => date('Y-m-d H:i:s'),
+                'status' => 'Deleted'
+            ]);
+
+            // UPDATE REQUEST
+            ModelRequest::where('id_asset', $ownership->id_asset)->where('status', 'Proses')->where('type', 'Pengembalian')->update([
+                'status' => 'Selesai'
             ]);
         }
 
