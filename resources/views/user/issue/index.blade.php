@@ -59,14 +59,16 @@
                                 <td>{{ $issue->asset->name }}</td>
                                 <td>{{ $issue->description }}</td>
                                 <td>
-                                    @if ($issue->status == 'Menunggu Konfirmasi')
+                                    @if ($issue->status == 'Menunggu Konfirmasi' || $issue->status == 'Proses')
                                         <span class="badge bg-warning">{{ $issue->status }}</span>
                                     @endif
                                 </td>
                                 <td style="vertical-align: middle; white-space: nowrap;">
+                                    @if ($issue->status == 'Menunggu Konfirmasi')
                                     <a href="{{ route('issue.edit', $issue->asset->code_asset) }}" class="text-primary" style="display: inline-block; vertical-align: middle;">
                                         <i class="bi bi-pencil-square fs-4"></i>
                                     </a>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach

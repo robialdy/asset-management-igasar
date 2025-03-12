@@ -36,10 +36,17 @@
         <ul class="menu">
             <li class="sidebar-title">Menu</li>
 
-            <li class="sidebar-item {{ request()->is('admin') ? 'active' : '' }}">
-                <a href="{{ route('dashboard.admin') }}" class='sidebar-link'>
+            <li class="sidebar-item {{ url()->current() == url('/') ? 'active' : '' }}">
+                <a href="{{ route('dashboard.user') }}" class='sidebar-link'>
                     <i class="bi bi-grid-fill"></i>
                     <span>Dashboard</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item {{ request()->is('your-assets*') ? 'active' : '' }}">
+                <a href="{{ route('your-asset') }}" class='sidebar-link'>
+                    <i class="bi bi-box-seam-fill"></i>
+                    <span>Division Asset</span>
                 </a>
             </li>
 
