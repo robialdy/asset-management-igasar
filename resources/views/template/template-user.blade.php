@@ -50,6 +50,13 @@
                 </a>
             </li>
 
+            <li class="sidebar-item {{ request()->is('procurement') ? 'active' : '' }}">
+                <a href="{{ route('user.procurement') }}" class='sidebar-link'>
+                    <i class="bi bi-plus-circle-fill"></i>
+                    <span>Pengadaan</span>
+                </a>
+            </li>
+
             <li class="sidebar-item {{ request()->is('issue*') ? 'active' : '' }}">
                 <a href="{{ route('issue') }}" class='sidebar-link'>
                     <i class="bi bi-exclamation-circle-fill"></i>

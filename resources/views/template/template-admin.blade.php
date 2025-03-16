@@ -49,9 +49,9 @@
                     <span>Request</span>
                 </a>
 
-                <ul class="submenu ">
+                <ul class="submenu {{ request()->is('admin/procurement*') ? 'active' : '' }}">
                     <li class="submenu-item">
-                        <a href="" class="submenu-link">Pengadaan</a>
+                        <a href="{{ route('procurement') }}" class="submenu-link">Pengadaan</a>
                     </li>
 
                     <li class="submenu-item {{ request()->is('admin/issue*') ? 'active' : '' }}">

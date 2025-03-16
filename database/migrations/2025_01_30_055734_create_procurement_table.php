@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('procurement', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_admin')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('code')->unique();
+            $table->foreignId('id_admin')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('id_user')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('name_division');
+            $table->string('name_division')->nullable();
             $table->text('reason');
+            $table->string('status');
             $table->timestamps();
         });
     }

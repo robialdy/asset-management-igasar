@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\ProcurementController;
 use App\Http\Controllers\division\DivisionAssetController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,7 @@ use App\Http\Controllers\user\YourAssetController;
 use App\Http\Controllers\admin\DashboardController as DashboardAdmin;
 use App\Http\Controllers\division\DashboardController as DashboardDivision;
 use App\Http\Controllers\user\IssueController;
+use App\Http\Controllers\user\ProcurementController as UserProcurementController;
 
 // AUTH
 Route::prefix('auth')->group(function(){
@@ -43,6 +45,16 @@ Route::middleware(['auth', 'role:Staff'])->group(function () {
     // YOUR ASSET
     Route::prefix('your-assets')->group(function (){
         Route::get('', [YourAssetController::class, 'index'])->name('your-asset');
+    });
+
+    // PENGADAAN
+    Route::prefix('procurement')->group(function () {
+        Route::get('', [UserProcurementController::class, 'index'])->name('user.procurement');
+        // CREATE
+        Route::get('create', [UserProcurementController::class, 'create'])->name('user.procurement.create');
+        Route::post('store', [UserProcurementController::class, 'store'])->name('user.procurement.store');
+        // VIEW DETAILS
+        Route::get('details/{code}', [UserProcurementController::class, 'view_details'])->name('user.procurement.detail');
     });
 
 });
@@ -135,6 +147,23 @@ Route::middleware(['auth', 'role:Staff'])->group(function () {
                 // PERBAIKAN
                 Route::get('repair/{code}', [AdminIssueController::class, 'repair'])->name('admin.issue.repair');
                 Route::put('repair/update/{id}', [AdminIssueController::class, 'repairUpdate'])->name('admin.issue.repairUpdate');
+            });
+
+            // PROCUREMENT
+            Route::prefix('procurement')->group(function () {
+                Route::get('', [ProcurementController::class, 'index'])->name('procurement');
+                // EDIT (APPROVED)
+                Route::get('confirm/{code}', [ProcurementController::class, 'confirm'])->name('procurement.confirm');
+                Route::put('update/{id}', [ProcurementController::class, 'update'])->name('procurement.update');
+                // REJECTED
+                Route::put('rejected/{id}', [ProcurementController::class, 'rejected'])->name('procurement.rejected');
+                // HAPUS
+                Route::delete('deleted/{id}', [ProcurementController::class, 'rejected_details'])->name('procurement.delete');
+                // TODO
+                Route::get('to-do/{code}', [ProcurementController::class, 'to_do'])->name('procurement.to-do');
+                //KIRIM TODO
+                Route::put('to-do/send/{id}', [ProcurementController::class, 'send_todo'])->name('procurement.send-todo');
+
             });
 
         });

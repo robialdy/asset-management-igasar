@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('detail_procurement', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('detail_procurement')->constrained('procurement')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('id_procurement')->constrained('procurement')->onDelete('cascade')->onUpdate('cascade');
             $table->string('title');
             $table->integer('amount');
             $table->string('unit');
-            $table->boolean('is_approved');
+            $table->boolean('is_approved')->nullable();
+            $table->boolean('is_completed')->default(false);
             $table->timestamps();
         });
     }
