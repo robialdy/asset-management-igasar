@@ -15,6 +15,8 @@ use App\Http\Controllers\admin\IssueController as AdminIssueController;
 // divisi
 use App\Http\Controllers\user\DashboardController as DashboardUser;
 use App\Http\Controllers\division\IssueController as DivisionIssueController;
+
+use App\Http\Controllers\division\ProcurementController as DivisionProcurementController;
 // user
 use App\Http\Controllers\user\YourAssetController;
 use App\Http\Controllers\admin\DashboardController as DashboardAdmin;
@@ -163,7 +165,6 @@ Route::middleware(['auth', 'role:Staff'])->group(function () {
                 Route::get('to-do/{code}', [ProcurementController::class, 'to_do'])->name('procurement.to-do');
                 //KIRIM TODO
                 Route::put('to-do/send/{id}', [ProcurementController::class, 'send_todo'])->name('procurement.send-todo');
-
             });
 
         });
@@ -189,6 +190,16 @@ Route::prefix('{division}')->middleware(['auth', 'checkDivision'])->group(functi
     // YOUR ASSET
     Route::prefix('division-assets')->group(function () {
         Route::get('', [DivisionAssetController::class, 'index'])->name('division-asset');
+    });
+
+    // PENGADAAN
+    Route::prefix('procurement')->group(function() {
+        Route::get('', [DivisionProcurementController::class, 'index'])->name('division.procurement');
+        // CREATE
+        Route::get('create', [DivisionProcurementController::class, 'create'])->name('division.procurement.create');
+        Route::post('store', [DivisionProcurementController::class, 'store'])->name('division.procurement.store');
+        // VIEW DETAILS
+        Route::get('details/{code}', [DivisionProcurementController::class, 'view_details'])->name('division.procurement.detail');
     });
 
 });

@@ -50,6 +50,13 @@
                 </a>
             </li>
 
+            <li class="sidebar-item {{ request()->is(Auth::user()->division->name.'procurement') ? 'active' : '' }}">
+                <a href="{{ route('division.procurement', ['division' => Auth::user()->division->name]) }}" class='sidebar-link'>
+                    <i class="bi bi-plus-circle-fill"></i>
+                    <span>Pengadaan</span>
+                </a>
+            </li>
+
             <li class="sidebar-item {{ request()->is(Auth::user()->division->name.'/issue*') ? 'active' : '' }}">
                 <a href="{{ route('division.issue', ['division' => Auth::user()->division->name]) }}" class='sidebar-link'>
                     <i class="bi bi-exclamation-circle-fill"></i>

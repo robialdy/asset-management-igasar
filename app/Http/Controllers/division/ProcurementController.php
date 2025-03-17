@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\user;
+namespace App\Http\Controllers\division;
 
-use App\Http\Controllers\Controller;
-use App\Models\Detail_Procurement;
 use App\Models\Procurement;
 use Illuminate\Http\Request;
+use App\Models\Detail_Procurement;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class ProcurementController extends Controller
@@ -13,19 +13,19 @@ class ProcurementController extends Controller
     public function index()
     {
         $data = [
-            'title' => 'Pengadaan | SMK IGAPIN',
-            'procurements' => Procurement::where('id_user', Auth::user()->id)->whereNotIn('status', ['Ditolak','Selesai'])->get(),
-            'historys' => Procurement::where('id_user', Auth::user()->id)->where('status', 'Selesai')->get(),
+            'title' => 'Pengadaan | SMKK IGAPIN',
+            'procurements' => Procurement::where('name_division', Auth::user()->division->name)->whereNotIn('status', ['Ditolak', 'Selesai'])->get(),
+            'historys' => Procurement::where('name_division', Auth::user()->division->name)->where('status', 'Selesai')->get(),
         ];
-        return view('user.procurement.index', $data);
+        return view('division.procurement.index', $data);
     }
 
     public function create()
     {
         $data = [
-            'title' => 'Request Pengadaan | SMK IGAPIN'
+            'title' => 'Request Pengadaan |  SMK IGAPIN',
         ];
-        return view('user.procurement.create', $data);
+        return view('division.procurement.create', $data);
     }
 
     public function store(Request $request)
@@ -40,7 +40,8 @@ class ProcurementController extends Controller
             'id_user' => Auth::user()->id,
             'status' => 'Menunggu Konfirmasi',
             'reason' => $request->reason,
-            'code' => 'PA' . date('ymdHis')
+            'code' => 'PA' . date('ymdHis'),
+            'name_division' => Auth::user()->division->name
         ]);
 
 
@@ -57,10 +58,10 @@ class ProcurementController extends Controller
             ]);
         }
 
-        return redirect()->route('user.procurement')->with('success', 'Data berhasil disimpan!');
+        return redirect()->route('division.procurement', Auth::user()->division->name)->with('success', 'Data berhasil disimpan!');
     }
 
-    public function view_details($code)
+    public function view_details($division, $code)
     {
         $procurement = Procurement::where('code', $code)->first();
 
@@ -68,6 +69,6 @@ class ProcurementController extends Controller
             'title' => 'Procurement Details | SMK IGAPIN',
             'details' => Detail_Procurement::where('id_procurement', $procurement->id)->get()
         ];
-        return view('user.procurement.detail', $data);
+        return view('division.procurement.detail', $data);
     }
 }

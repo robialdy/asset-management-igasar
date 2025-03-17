@@ -1,4 +1,4 @@
-@extends('template.template-user')
+@extends('template.template-division')
 
 @section('title', $title)
 
@@ -21,7 +21,7 @@
     </div>
 
 <div class="text-end mb-3">
-    <a href="{{ route('user.procurement.create') }}" class="btn btn-primary">
+    <a href="{{ route('division.procurement.create', Auth::user()->division->name) }}" class="btn btn-primary">
         Request Pengadaan
     </a>
 </div>
@@ -36,7 +36,7 @@
             <div class="card-body">
 
                 <div class="table-responsive">
-                    <table class="table" id="table3">
+                    <table class="table" id="table1">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -48,19 +48,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($procurements as $procurement)
+                            @foreach ($procurements as $p)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $procurement->user->first_name }}</td>
-                                <td>{{ $procurement->reason }}</td>
-                                <td>{{ $procurement->code }}</td>
-                                <td>{{ $procurement->created_at }}</td>
+                                <td>{{ $p->user->first_name }}</td>
+                                <td>{{ $p->reason }}</td>
+                                <td>{{ $p->code }}</td>
+                                <td>{{ $p->created_at }}</td>
                                 <td>
-                                    @if ($p->status == 'Menunggu Konfirmasi')
-                                    <a href="{{ route('user.procurement.detail', $procurement->code) }}"><span class="badge bg-primary">Menunggu Konfirmasi</span></a>
-                                    @else
-                                        <a href="{{ route('user.procurement.detail', $procurement->code) }}"><span class="badge bg-warning">Proses</span></a>
-                                    @endif
+                                @if ($p->status == 'Menunggu Konfirmasi')
+                                    <a href="{{ route('division.procurement.detail', ['division' => Auth::user()->division->name, 'code' => $p->code]) }}"><span class="badge bg-primary">Menunggu Konfirmasi</span></a>
+                                @else
+                                    <a href="{{ route('division.procurement.detail', ['division' => Auth::user()->division->name, 'code' => $p->code]) }}"><span class="badge bg-warning">Proses</span></a>
+                                @endif
                                 </td>
                             </tr>
                             @endforeach
@@ -84,7 +84,7 @@
             <div class="card-body">
 
                 <div class="table-responsive">
-                    <table class="table" id="table1">
+                    <table class="table" id="table3">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -92,19 +92,19 @@
                                 <th>Alasan</th>
                                 <th>Code</th>
                                 <th>Tgl diajukan</th>
-                                <th>Lihat Cakupan</th>
+                                <th>Lihat Pengadaan</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($historys as $history)
+                            @foreach ($historys as $h)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $history->user->first_name }}</td>
-                                <td>{{ $history->reason }}</td>
-                                <td>{{ $history->code }}</td>
-                                <td>{{ $history->created_at }}</td>
+                                <td>{{ $h->user->first_name }}</td>
+                                <td>{{ $h->reason }}</td>
+                                <td>{{ $h->code }}</td>
+                                <td>{{ $h->created_at }}</td>
                                 <td>
-                                    <a href="{{ route('user.procurement.detail', $history->code) }}"><span class="badge bg-primary">Details</span></a>
+                                    <a href="{{ route('division.procurement.detail', ['division' => Auth::user()->division->name, 'code' => $h->code]) }}"><span class="badge bg-primary">Details</span></a>
                                 </td>
                             </tr>
                             @endforeach

@@ -1,4 +1,4 @@
-@extends('template.template-user')
+@extends('template.template-division')
 
 @section('title', $title)
 
@@ -12,8 +12,8 @@
             <div class="col-12 col-md-6 order-md-2 order-first">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('dashboard.user') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('procurement') }}">Pengadaan</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('dashboard.division', Auth::user()->division->name) }}">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('division.procurement', Auth::user()->division->name) }}">Pengadaan</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Request Pengadaan</li>
                     </ol>
                 </nav>
