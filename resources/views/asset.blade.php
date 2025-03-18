@@ -1,26 +1,15 @@
-@extends('template.template-admin')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
 
-@section('title', $title)
-
-@section('content')
-
-
-    <div class="page-title">
-        <div class="row">
-            <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3>Assets</h3>
-            </div>
-            <div class="col-12 col-md-6 order-md-2 order-first">
-                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('dashboard.admin') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('asset') }}">Assets</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Detail</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-    </div>
+    <link rel="stylesheet" href="{{ asset('assets/compiled/css/app.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/compiled/css/app-dark.css') }}">
+</head>
+<body>
 
   <div class="container mt-3">
 
@@ -151,9 +140,64 @@
           </div>
         </div>
 
-      </div>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-3 text-primary">
+                    STATUS PEMINJAMAN SAAT INI
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table" id="table1">
+                        <thead>
+                            <tr>
+                            @if ($status == 'user')
+                            <th>Nama</th>
+                            @else
+                            <th>Division</th>
+                            @endif
+                                <th>Asset</th>
+                                <th>Kode Asset</th>
+                                <th>Ditambahkan</th>
+                                <th>Lampiran</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if ($status == 'user')
+                            <tr>
+                                <td>{{ $ownership->user->first_name }}</td>
+                                <td>{{ $ownership->asset->name }}</td>
+                                <td>{{ $ownership->asset->code_asset }}</td>
+                                <td>{{ $ownership->added_date }}</td>
+                                <td></td>
+                            </tr>
+                            @elseif ($status == 'division')
+                            <tr>
+                                <td>{{ $ownership->division->name }}</td>
+                                <td>{{ $ownership->asset->name }}</td>
+                                <td>{{ $ownership->asset->code_asset }}</td>
+                                <td>{{ $ownership->added_date }}</td>
+                                <td></td>
+                            </tr>
+                            @else
+                                <tr>
+
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </div>
+
+
+    </div>
+
+
   </div>
+
 
   <div class="modal fade" id="modal-detail" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -183,4 +227,6 @@
     </div>
 </div>
 
-@endsection
+    <script src="{{ asset('assets/compiled/js/app.js') }}"></script>
+</body>
+</html>

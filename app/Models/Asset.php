@@ -9,7 +9,7 @@ class Asset extends Model
 {
     protected $table = 'assets';
 
-    protected $fillable = ['code_asset', 'name', 'description', 'picture', 'type', 'id_category', 'added_date', 'status', 'pic_payment', 'stock', 'unit'];
+    protected $fillable = ['code_asset', 'name', 'description', 'picture', 'type', 'id_category', 'added_date', 'status', 'pic_payment', 'stock', 'unit', 'qr_code'];
 
     use SoftDeletes;
 

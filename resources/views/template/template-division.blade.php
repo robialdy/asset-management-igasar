@@ -57,6 +57,13 @@
                 </a>
             </li>
 
+            <li class="sidebar-item {{ request()->is(Auth::user()->division->name.'borrowing') ? 'active' : '' }}">
+                <a href="{{ route('borrowing', ['division' => Auth::user()->division->name]) }}" class='sidebar-link'>
+                    <i class="bi bi-plus-circle-fill"></i>
+                    <span>Peminjaman</span>
+                </a>
+            </li>
+
             <li class="sidebar-item {{ request()->is(Auth::user()->division->name.'/issue*') ? 'active' : '' }}">
                 <a href="{{ route('division.issue', ['division' => Auth::user()->division->name]) }}" class='sidebar-link'>
                     <i class="bi bi-exclamation-circle-fill"></i>

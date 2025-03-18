@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin\ProcurementController;
 use App\Http\Controllers\division\DivisionAssetController;
+use App\Http\Controllers\QrCodeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 // admin
@@ -20,6 +21,7 @@ use App\Http\Controllers\division\ProcurementController as DivisionProcurementCo
 // user
 use App\Http\Controllers\user\YourAssetController;
 use App\Http\Controllers\admin\DashboardController as DashboardAdmin;
+use App\Http\Controllers\division\BorrowingController;
 use App\Http\Controllers\division\DashboardController as DashboardDivision;
 use App\Http\Controllers\user\IssueController;
 use App\Http\Controllers\user\ProcurementController as UserProcurementController;
@@ -202,7 +204,20 @@ Route::prefix('{division}')->middleware(['auth', 'checkDivision'])->group(functi
         Route::get('details/{code}', [DivisionProcurementController::class, 'view_details'])->name('division.procurement.detail');
     });
 
+    // PEMINJAMAN
+    Route::prefix('borrowing')->group(function() {
+        Route::get('', [BorrowingController::class, 'index'])->name('borrowing');
+        // CREATE
+        Route::get('create', [BorrowingController::class, 'create'])->name('borrowing.create');
+        Route::post('store', [BorrowingController::class, 'store'])->name('borrowing.store');
+        // UPDATE STATUS
+        Route::put('update-status/{id}', [BorrowingController::class, 'updateStatus'])->name('borrowing.updateStatus');
+    });
+
 });
+
+// QRCODE
+Route::get('assets/{code_asset}', [QrCodeController::class, 'index'])->name('asset.qrcode');
 
 
 

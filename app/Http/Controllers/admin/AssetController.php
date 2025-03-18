@@ -4,10 +4,11 @@ namespace App\Http\Controllers\admin;
 
 use App\Models\Asset;
 use App\Models\Category;
-use App\Models\Detail_Asset;
 use Illuminate\Support\Str;
+use App\Models\Detail_Asset;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class AssetController extends Controller
 {
@@ -77,6 +78,11 @@ class AssetController extends Controller
             'unit' => $request->one_unit_many_unit
         ]);
 
+        // QR CODE
+        $this->generateQrCode($asset);
+
+
+
         // PROSES TAMBAH DETAIL
         if ($request->one_unit_many_unit == 'one-unit') {
             if ($request->details) {
@@ -91,6 +97,19 @@ class AssetController extends Controller
         }
 
         return redirect()->route('asset')->with('success', 'Asset berhasil ditambahkan!');
+    }
+
+    private function generateQrCode($asset)
+    {
+        $url = route('asset.qrcode', $asset->code_asset);
+
+        $qrCode = QrCode::format('svg')->size(200)->generate($url);
+
+        $qrfileName = $asset->code_asset . '.svg';
+        $qrCodePath = public_path('assets/qr/' . $qrfileName);
+        file_put_contents($qrCodePath, $qrCode);
+
+        $asset->update(['qr_code' => $qrfileName]);
     }
 
     public function detail($code)

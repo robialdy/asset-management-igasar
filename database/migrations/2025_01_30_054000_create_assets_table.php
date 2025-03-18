@@ -25,6 +25,7 @@ return new class extends Migration
             $table->text('notes')->nullable();
             $table->string('unit');
             $table->string('pic_payment')->nullable();
+            $table->string('qr_code')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

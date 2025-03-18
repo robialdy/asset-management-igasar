@@ -37,6 +37,7 @@
                                 <th>Gambar</th>
                                 <th>Code</th>
                                 <th>Nama</th>
+                                <th>Stock</th>
                                 <th>Tgl Ditambahkan</th>
                                 <th>Status</th>
                             </tr>
@@ -51,6 +52,7 @@
                                 <td>{{ $ownership->asset->code_asset }}</td>
                                 <td>{{ $ownership->asset->name }}</td>
                                 <td>{{ $ownership->asset->added_date }}</td>
+                                <td>{{ $ownership->asset->stock }}</td>
                                 <td>{{ $ownership->status }}</td>
                             </tr>
                             @endforeach
