@@ -30,7 +30,7 @@ use App\Http\Controllers\user\ProcurementController as UserProcurementController
 Route::prefix('auth')->group(function(){
     Route::get('', [AuthController::class, 'index'])->name('login');
     Route::post('login', [AuthController::class, 'login'])->name('auth.login');
-    Route::get('logout', [AuthController::class, 'logout'])->name('auth.looutg');
+    Route::get('logout', [AuthController::class, 'logout'])->name('auth.logout');
 });
 
 // STAFF / GURU

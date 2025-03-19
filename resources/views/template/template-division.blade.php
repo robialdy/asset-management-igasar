@@ -37,7 +37,7 @@
             <li class="sidebar-title">Menu</li>
 
             <li class="sidebar-item {{ request()->is('admin') ? 'active' : '' }}">
-                <a href="{{ route('dashboard.admin') }}" class='sidebar-link'>
+                <a href="{{ route('dashboard.division', Auth::user()->division->name) }}" class='sidebar-link'>
                     <i class="bi bi-grid-fill"></i>
                     <span>Dashboard</span>
                 </a>
@@ -138,26 +138,28 @@
                                         </div>
                                         <div class="user-img d-flex align-items-center">
                                             <div class="avatar avatar-md">
-                                                <img src="./assets/compiled/jpg/1.jpg">
+                                                <img src="{{ asset('assets/static/images/picture/blank_profile.png') }}">
                                             </div>
                                         </div>
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton" style="min-width: 11rem;">
                                     <li>
-                                        <h6 class="dropdown-header">Hello, John!</h6>
+                                        <h6 class="dropdown-header">Hello, {{ Auth::user()->first_name }}!</h6>
                                     </li>
-                                    <li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-person me-2"></i> My
-                                            Profile</a></li>
-                                    <li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-gear me-2"></i>
-                                            Settings</a></li>
-                                    <li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-wallet me-2"></i>
-                                            Wallet</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('dashboard.division', Auth::user()->division->name) }}"><i class="bi bi-grid-fill me-2"></i></i>
+                                            Dashboard Divisi</a></li>
+                                        </li>
+                                        <li><a class="dropdown-item" href="{{ route('dashboard.user') }}"><i class="bi bi-grid-fill me-2"></i></i>
+                                            Dashboard</a></li>
+                                            <hr class="dropdown-divider">
+                                    </li>
                                     <li>
-                                        <hr class="dropdown-divider">
+                                        <form action="{{ route('auth.logout') }}">
+                                            <button type="submit" class="btn btn-link ms-2"><i
+                                                class="icon-mid bi bi-box-arrow-left me-2"></i> Logout</button>
+                                        </form>
                                     </li>
-                                    <li><a class="dropdown-item" href="#"><i
-                                                class="icon-mid bi bi-box-arrow-left me-2"></i> Logout</a></li>
                                 </ul>
                             </div>
                         </div>

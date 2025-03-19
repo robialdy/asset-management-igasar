@@ -51,10 +51,6 @@
                             aria-controls="division" aria-selected="false">Divisi</a>
                     </li>
 
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#many-unit" role="tab"
-                            aria-controls="many-unit" aria-selected="false">Gedung</a>
-                    </li>
                 </ul>
             </div>
             <div class="card-body">

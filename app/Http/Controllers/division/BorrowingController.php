@@ -59,7 +59,13 @@ class BorrowingController extends Controller
 
     public function updateStatus(Request $request, $division, $id)
     {
+        $borrowing = Borrowing::where('id', $id)->first();
+
         Borrowing::where('id', $id)->update(['status' => 'Selesai']);
+
+        Division_Ownership::where('id_asset', $borrowing->id_asset)->where('status', 'Dipinjam')->update([
+            'status' => 'Owned'
+        ]);
 
         return redirect()->route('borrowing', Auth::user()->division->name)->with('success', 'Peminjaman berhasil diselesaikan!');
     }

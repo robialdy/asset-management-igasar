@@ -4,6 +4,9 @@ let jquery_datatable = $("#table1").DataTable({
 let jquery_datatable_3 = $("#table3").DataTable({
     responsive: true,
 });
+let jquery_datatable_4 = $("#table4").DataTable({
+    responsive: true,
+});
 let customized_datatable = $("#table2").DataTable({
     responsive: true,
     pagingType: 'simple',

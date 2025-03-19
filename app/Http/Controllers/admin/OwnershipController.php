@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Asset;
+use App\Models\building;
 use App\Models\Detail_Asset;
 use App\Models\Division;
 use App\Models\Division_Ownership;
