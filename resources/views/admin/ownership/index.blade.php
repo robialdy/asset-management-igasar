@@ -216,14 +216,6 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-4">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="route" id="borongan" value="building">
-                                <label class="form-check-label" for="borongan">
-                                    Gedung
-                                </label>
-                            </div>
-                        </div>
                     </div>
 
             </div>

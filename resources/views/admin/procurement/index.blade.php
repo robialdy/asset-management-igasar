@@ -46,7 +46,14 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $procurement->user->first_name }}</td>
-                                <td>{{ $procurement->user->division->name }}</td>
+                                <td>
+                                    @if ($procurement->name_division)
+                                    {{ $procurement->user->division->name }}
+                                    @else
+                                    null
+                                    @endif
+
+                                </td>
                                 <td>{{ $procurement->code }}</td>
                                 <td>{{ $procurement->reason }}</td>
                                 <td>

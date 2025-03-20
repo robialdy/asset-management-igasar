@@ -146,7 +146,7 @@ class OwnershipController extends Controller
                     unlink(public_path('assets/static/images/attachment/' . $ownership->attachment));
                 }
             } else {
-                $attachment = null;
+                $attachment = $ownership->attachment;
             }
 
             User_Ownership::find($id)->update([

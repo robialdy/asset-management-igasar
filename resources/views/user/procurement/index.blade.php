@@ -56,7 +56,7 @@
                                 <td>{{ $procurement->code }}</td>
                                 <td>{{ $procurement->created_at }}</td>
                                 <td>
-                                    @if ($p->status == 'Menunggu Konfirmasi')
+                                    @if ($procurement->status == 'Menunggu Konfirmasi')
                                     <a href="{{ route('user.procurement.detail', $procurement->code) }}"><span class="badge bg-primary">Menunggu Konfirmasi</span></a>
                                     @else
                                         <a href="{{ route('user.procurement.detail', $procurement->code) }}"><span class="badge bg-warning">Proses</span></a>

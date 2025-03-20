@@ -67,7 +67,7 @@ class ProcurementController extends Controller
 
         $data = [
             'title' => 'Procurement Details | SMK IGAPIN',
-            'details' => Detail_Procurement::where('id_procurement', $procurement->id)->get()
+            'details' => Detail_Procurement::where('id_procurement', $procurement->id)->whereNot('is_approved', 0)->get()
         ];
         return view('division.procurement.detail', $data);
     }

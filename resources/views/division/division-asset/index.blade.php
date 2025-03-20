@@ -51,8 +51,8 @@
                                 </td>
                                 <td>{{ $ownership->asset->code_asset }}</td>
                                 <td>{{ $ownership->asset->name }}</td>
-                                <td>{{ $ownership->asset->added_date }}</td>
                                 <td>{{ $ownership->asset->stock }}</td>
+                                <td>{{ $ownership->asset->added_date }}</td>
                                 <td>{{ $ownership->status }}</td>
                             </tr>
                             @endforeach

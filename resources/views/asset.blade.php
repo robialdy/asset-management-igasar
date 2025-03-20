@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 
-    <link rel="stylesheet" href="{{ asset('assets/compiled/css/app.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/compiled/css/app-dark.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('assets/compiled/css/app.css') }}">
+  <link rel="stylesheet" href="{{ secure_asset('assets/compiled/css/app-dark.css') }}">
 </head>
 <body>
 

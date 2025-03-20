@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -141,10 +141,12 @@
                                     <li><a class="dropdown-item" href="{{ route('dashboard.user') }}"><i class="bi bi-grid-fill me-2"></i></i>
                                             Dashboard</a></li>
                                     </li>
+                                    @if (Auth::user()->id_division)
                                     <li><a class="dropdown-item" href="{{ route('dashboard.division', Auth::user()->division->name) }}"><i class="bi bi-grid-fill me-2"></i></i>
                                             Dashboard Divisi</a></li>
                                         <hr class="dropdown-divider">
                                     </li>
+                                    @endif
                                     <li>
                                         <form action="{{ route('auth.logout') }}">
                                             <button type="submit" class="btn btn-link ms-2"><i

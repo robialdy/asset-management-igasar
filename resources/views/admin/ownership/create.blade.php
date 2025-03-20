@@ -74,7 +74,6 @@
                             @enderror
                         </div>
 
-                        @if (request('route') == 'guru-staff' || request('route' == 'division'))
                         <div class="form-group col-6">
                             <label for="added_date">Diserahkan Tanggal<span class="text-danger">*</span></label>
                             <input type="date" class="form-control" id="added_date" placeholder="Masukan nama asset" name="added_date" value="{{ old('added_date', date('Y-m-d')) }}">
@@ -82,7 +81,6 @@
                             <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
-                        @endif
 
 
                         @if (request('route') == 'guru-staff')
